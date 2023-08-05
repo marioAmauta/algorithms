@@ -31,15 +31,20 @@
 // ES6 looping approach
 function smallestCommons(arr) {
   const [min, max] = arr.sort((a, b) => a - b);
-  console.log({ min, max });
 
   const range = Array(max - min + 1)
     .fill(0)
     .map((_, i) => i + min);
-  console.log({ range });
 
   const upperBound = range.reduce((acc, el) => acc * el);
-  console.log({ upperBound });
+
+  for (let multiple = max; multiple <= upperBound; multiple += max) {
+    const divisible = range.every((value) => multiple % value === 0);
+
+    if (divisible) {
+      return multiple;
+    }
+  }
 }
 
 const smc = smallestCommons([1, 5]);
